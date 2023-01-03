@@ -5,12 +5,13 @@ part 'index.g.dart';
 @JsonSerializable()
 class MovieModel {
   int id;
-  String imgUrl;
+  String imgUrl, title;
   int? publishedYear, durationMin;
   String? type, description;
 
   MovieModel(
       {required this.id,
+      required this.title,
       required this.imgUrl,
       this.type,
       this.description,
