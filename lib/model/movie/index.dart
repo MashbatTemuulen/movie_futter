@@ -6,7 +6,7 @@ part 'index.g.dart';
 class MovieModel {
   int id;
   String imgUrl, title;
-  int? publishedYear, durationMin;
+  String? publishedYear, durationMin;
   String? type, description;
 
   MovieModel(
@@ -17,6 +17,9 @@ class MovieModel {
       this.description,
       this.durationMin,
       this.publishedYear});
+
+  static List<MovieModel> fromList(List<dynamic> data) =>
+      data.map((el) => MovieModel.fromJson(el)).toList();
 
   factory MovieModel.fromJson(Map<String, dynamic> json) =>
       _$MovieModelFromJson(json);
