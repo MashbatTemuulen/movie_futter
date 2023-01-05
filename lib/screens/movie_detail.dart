@@ -1,11 +1,19 @@
 import "package:flutter/material.dart";
 import "package:movie/model/movie/index.dart";
 
-class MovieDetailPage extends StatelessWidget {
+class MovieDetailPage extends StatefulWidget {
   final MovieModel data;
+  final List<int> whishListIds;
+  final Function(int) ontToggleWishList;
 
-  const MovieDetailPage(this.data, {super.key});
+  const MovieDetailPage(this.data, this.whishListIds, this.ontToggleWishList,
+      {super.key});
 
+  @override
+  State<MovieDetailPage> createState() => _MovieDetailPageState();
+}
+
+class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -26,7 +34,7 @@ class MovieDetailPage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   SafeArea(
-                      child: Image.network(data.imgUrl,
+                      child: Image.network(widget.data.imgUrl,
                           width: width,
                           fit: BoxFit.fitWidth,
                           alignment: Alignment.topCenter)),
@@ -41,7 +49,7 @@ class MovieDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 50,
                       ),
-                      Text(data.title,
+                      Text(widget.data.title,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
@@ -50,7 +58,7 @@ class MovieDetailPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                          "${data.publishedYear} | ${data.durationMin} | ${data.type}",
+                          "${widget.data.publishedYear} | ${widget.data.durationMin} | ${widget.data.type}",
                           style: const TextStyle(
                               color: Colors.white60,
                               fontWeight: FontWeight.w500)),
@@ -66,6 +74,22 @@ class MovieDetailPage extends StatelessWidget {
                       onPressed: () => Navigator.pop(context),
                       icon: const Icon(
                         Icons.chevron_left,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+                  SafeArea(
+                      child: Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () => {
+                        setState(
+                            () => {widget.ontToggleWishList(widget.data.id)})
+                      },
+                      icon: Icon(
+                        widget.whishListIds.any((el) => el == widget.data.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                         color: Colors.white,
                       ),
                     ),
@@ -86,7 +110,7 @@ class MovieDetailPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(data.description ?? "",
+                Text(widget.data.description ?? "",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.white60, fontWeight: FontWeight.w500)),

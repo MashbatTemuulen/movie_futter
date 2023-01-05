@@ -13,11 +13,32 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
 
-  final List<Widget> _totalPage = const [
-    MoviesPage(),
-    WhishListPage(),
-    ProfilePage()
-  ];
+  // final List<Widget> _totalPage = const [
+  //   MoviesPage(),
+  //   WhishListPage(),
+  //   ProfilePage()
+  // ];
+
+  List<int> _wishListIds = [];
+  late List<Widget> _totalPage;
+  @override
+  void initState() {
+    super.initState();
+    _totalPage = [
+      MoviesPage(_wishListIds, _toggleWishList),
+      WhishListPage(_wishListIds, _toggleWishList),
+      ProfilePage()
+    ];
+  }
+
+  void _toggleWishList(int index) {
+    setState(() => {
+          if (_wishListIds.any((el) => el == index))
+            {_wishListIds.remove(index)}
+          else
+            {_wishListIds.add(index)}
+        });
+  }
 
   void _setCurrentIndex(int val) {
     setState(() {

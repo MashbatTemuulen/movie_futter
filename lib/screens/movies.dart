@@ -6,7 +6,9 @@ import 'package:movie/widgets/movie_card.dart';
 import 'package:movie/widgets/movie_special_card.dart';
 
 class MoviesPage extends StatefulWidget {
-  const MoviesPage({super.key});
+  final List<int> wishListIds;
+  final void Function(int) onToggleWishList;
+  const MoviesPage(this.wishListIds, this.onToggleWishList, {super.key});
 
   @override
   State<MoviesPage> createState() => _MoviesPageState();
@@ -44,8 +46,8 @@ class _MoviesPageState extends State<MoviesPage> {
                     child: Row(
                         children: List.generate(
                             _specialData.length,
-                            ((index) =>
-                                MovieSpecialCard(_specialData[index])))),
+                            ((index) => MovieSpecialCard(_specialData[index],
+                                widget.wishListIds, widget.onToggleWishList)))),
                   ),
                   const SizedBox(height: 20),
                   const Text("Бүх кинонууд",
@@ -56,8 +58,10 @@ class _MoviesPageState extends State<MoviesPage> {
                   const SizedBox(height: 20),
                   Wrap(
                     spacing: 10,
-                    children: List.generate(snapshot.data!.length,
-                        (index) => MovieCard(snapshot.data![index])),
+                    children: List.generate(
+                        snapshot.data!.length,
+                        (index) => MovieCard(snapshot.data![index],
+                            widget.wishListIds, widget.onToggleWishList)),
                   )
                 ],
               ),
