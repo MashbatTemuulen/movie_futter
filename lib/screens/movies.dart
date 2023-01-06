@@ -4,11 +4,11 @@ import "package:flutter/material.dart";
 import "package:movie/model/movie/index.dart";
 import 'package:movie/widgets/movie_card.dart';
 import 'package:movie/widgets/movie_special_card.dart';
+import "package:movie/providers/common.dart";
+import 'package:provider/provider.dart';
 
 class MoviesPage extends StatefulWidget {
-  final List<int> wishListIds;
-  final void Function(int) onToggleWishList;
-  const MoviesPage(this.wishListIds, this.onToggleWishList, {super.key});
+  const MoviesPage({super.key});
 
   @override
   State<MoviesPage> createState() => _MoviesPageState();
@@ -18,7 +18,10 @@ class _MoviesPageState extends State<MoviesPage> {
   Future<List<MovieModel>> _getData() async {
     String res =
         await DefaultAssetBundle.of(context).loadString("assets/movies.json");
-    return MovieModel.fromList(jsonDecode(res));
+    // return MovieModel.fromList(jsonDecode(res));
+    List<MovieModel> data = MovieModel.fromList(jsonDecode(res));
+    Provider.of<CommonProvider>(context, listen: false).setMovies(data);
+    return data;
   }
 
   @override
@@ -46,8 +49,9 @@ class _MoviesPageState extends State<MoviesPage> {
                     child: Row(
                         children: List.generate(
                             _specialData.length,
-                            ((index) => MovieSpecialCard(_specialData[index],
-                                widget.wishListIds, widget.onToggleWishList)))),
+                            ((index) => MovieSpecialCard(
+                                  _specialData[index],
+                                )))),
                   ),
                   const SizedBox(height: 20),
                   const Text("Бүх кинонууд",
@@ -60,8 +64,9 @@ class _MoviesPageState extends State<MoviesPage> {
                     spacing: 10,
                     children: List.generate(
                         snapshot.data!.length,
-                        (index) => MovieCard(snapshot.data![index],
-                            widget.wishListIds, widget.onToggleWishList)),
+                        (index) => MovieCard(
+                              snapshot.data![index],
+                            )),
                   )
                 ],
               ),

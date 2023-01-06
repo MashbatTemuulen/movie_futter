@@ -4,19 +4,13 @@ import "package:movie/screens/movie_detail.dart";
 
 class MovieCard extends StatelessWidget {
   final MovieModel data;
-  final List<int> whishListIds;
-  final Function(int) ontToggleWishList;
 
   void _onCardTap(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) =>
-                MovieDetailPage(data, whishListIds, ontToggleWishList)));
+        context, MaterialPageRoute(builder: (_) => MovieDetailPage(data)));
   }
 
-  const MovieCard(this.data, this.whishListIds, this.ontToggleWishList,
-      {super.key});
+  const MovieCard(this.data, {super.key});
 
   @override
   Widget build(BuildContext context) {
