@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie/providers/common.dart';
 import 'package:movie/screens/home.dart';
+import 'package:movie/widgets/global_keys.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        navigatorKey: GlobalKeys.navigatorKey,
         home: HomePage(),
       ),
     );
