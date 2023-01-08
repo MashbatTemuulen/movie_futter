@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:movie/model/movie/index.dart';
 import 'package:movie/screens/movie_detail.dart';
 
+import 'my_bottomsheet.dart';
+
 class MovieSpecialCard extends StatelessWidget {
   final MovieModel data;
 
   void _onCardTap(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => MovieDetailPage(data)));
+    showBottomSheet(
+        context: context, builder: ((context) => MyBottomSheet(data)));
+
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (_) => MovieDetailPage(data)));
   }
 
   const MovieSpecialCard(this.data, {super.key});

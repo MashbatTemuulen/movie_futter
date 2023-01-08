@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/providers/common.dart';
 import 'package:movie/screens/movies.dart';
@@ -26,18 +27,18 @@ class HomePage extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
               currentIndex: provider.currentIndex,
               onTap: provider.changeCurrentIndex,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.movie),
-                  label: "Кино",
+                  label: "movie".tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.favorite),
-                  label: "Дуртай",
+                  label: "favorite".tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
-                  label: "Профайл",
+                  label: "profile".tr(),
                 ),
               ]),
         );
